@@ -334,7 +334,7 @@ def Victorine(update, context): # функция, обрабатывающая �
             context.bot.send_message(user_id, "К сожалению, сейчас нет никаких викторин. Вам придет сообщение, за 15 мин до начала викторины")
             mydb.commit()
             return
-        cursor.execute("SELECT `user_id` FROM `users` WHERE `user_id` = {} AND `is_do_victorine` = 1".format(user_id))
+        cursor.execute("SELECT `user_id` FROM `users` WHERE `user_id` = {} AND `is_do_victorine` = 0".format(user_id))
         res = cursor.fetchone()
         if (res != None):
             context.bot.send_message(user_id, "Ты уже играл, приходи завтра в 13:00 или сегодня в 20:00 по МСК")
