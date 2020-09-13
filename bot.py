@@ -26,7 +26,8 @@ class Conn:
         #sc8KCek9aaVf3Fnn
         passwd="sc8KCek9aaVf3Fnn",
         database="bot",
-        collation="utf8mb4_general_ci"
+        collation="utf8mb4_general_ci",
+        auth_plugin='mysql_native_password'
         ) # ВАЖНО! Измените тут на ваши данные
     def get_connection(self):
         return DataBase(self.pool.get_connection(), self.pool)
@@ -633,16 +634,16 @@ def admin_input(update, context, state): # Взаимодействует с в�
     
 def update_time_data(data,id_data):
     now = datetime.now()
-    if (re.match("[0-1][0-9].[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data) != None): # MM.DD HH:MM:SS
-        res = re.match("[0-1][0-9].[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data)
+    if (re.match("[0-1][0-9].[0-3][0-9] [0-2][0-9]:[0-5][0-9]",data) != None): # MM.DD HH:MM:SS
+        res = re.match("[0-1][0-9].[0-3][0-9] [0-2][0-9]:[0-5][0-9]",data)
         date = str(now.year) + "-" + res.group(0).replace('.', '-')
         cursor.execute("UPDATE `bot_settings` SET `date` = '{0}' WHERE `id` = {1}".format(date,id_data))
-    elif (re.match("[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data) != None): # DD HH:MM:SS
-        res = re.match("[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data)
+    elif (re.match("[0-3][0-9] [0-2][0-9]:[0-5][0-9]",data) != None): # DD HH:MM:SS
+        res = re.match("[0-3][0-9] [0-2][0-9]:[0-5][0-9]",data)
         date = str(now.year) + "-" + str(now.month) + res.group(0)
         cursor.execute("UPDATE `bot_settings` SET `date` = '{0}' WHERE `id` = {1}".format(date,id_data))
-    elif (re.match("[0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data) != None): # HH:MM:SS
-        res = re.match("[0-2][0-9]:[0-5][0-9]:[0-5][0-9]",data)
+    elif (re.match("[0-2][0-9]:[0-5][0-9]",data) != None): # HH:MM:SS
+        res = re.match("[0-2][0-9]:[0-5][0-9]",data)
         date = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + " " + res.group(0)
         cursor.execute("UPDATE `bot_settings` SET `date` = '{0}' WHERE `id` = {1}".format(date,id_data))
     else:
@@ -912,7 +913,7 @@ def mainFunc(update, context): # Основная функция, через н�
         "Создать новый вопрос":add_question,
         "Удалить вопрос":delete_questions,
         "Отмена": default,
-        "Добавить рекламу":edit_ad,
+        "Отправить рекламу":edit_ad,
         "Добавить канал":add_channel,
         "Разослать всем": send_to_all,
         "Статистика":statistic_func,
