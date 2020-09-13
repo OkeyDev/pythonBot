@@ -24,3 +24,5 @@ INSERT INTO `admins` (`user_id`) VALUES (<YourID>);
 ```
 
 Для того, что бы узнать свой id напишите этому боту /id или напишите сообщение /id боту @YourTGid_Bot
+
+Проверить бота можно в телеграмме, написав @Victorine_s_bot
